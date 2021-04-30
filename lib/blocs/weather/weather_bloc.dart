@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:weather_app/data/weather_repository.dart';
 import 'package:weather_app/model/Weather.dart';
 import 'package:weather_app/blocs/weather/weather_state.dart';
 import 'package:weather_app/blocs/weather/weather_event.dart';
@@ -18,6 +19,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   ) async* {
 
     if(event is FetchWeatherEvent) {
+      WeatherRepository weatherRepository = WeatherRepository();
+      weatherRepository.getWeather(event.cityName);
       yield WeatherLoadingState();
       try{
         yield WeatherLoaded(weather: Weather());
